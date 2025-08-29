@@ -1,17 +1,20 @@
 package com.school;
 
-
 public class Course {
-    String courseId;
-    String courseName;
+    private int courseId;
+    private String courseName;
 
-    public void setCourseDetails(String courseId, String courseName) {
+    public Course(int courseId, String courseName) {
         this.courseId = courseId;
         this.courseName = courseName;
     }
 
-    public void getCourseDetails() {
-        System.out.println("Course ID: " + this.courseId);
-        System.out.println("Course Name: " + this.courseName);
+    // Getters
+    public int getCourseId() {
+        return courseId;
+    }
+
+    public String getCourseName() {
+        return courseName;
     }
 }

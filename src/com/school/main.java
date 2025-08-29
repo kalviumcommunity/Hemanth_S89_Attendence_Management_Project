@@ -14,62 +14,41 @@
 
 package com.school;
 
+import java.util.ArrayList;
+import java.util.List;
 
-public class main{
-    public static void main(String[] args){
-        System.out.println("----Attendence Management System----");
-        Student[] students = new Student[2];
-        students[0] = new Student();
-        students[0].setStudentDetails(1, "Hemanth" );
-        students[1] = new Student();
-        students[1].setStudentDetails(2, "Sai" );
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("---- Attendance Management System ----");
 
-         System.out.println("---Registered Students---");
-        for(Student student: students){
-            if(student != null){
-                student.getDetails();
-            }
+        // Create students
+        Student student1 = new Student(1, "Hemanth");
+        Student student2 = new Student(2, "Sai");
+
+        // Create courses
+        Course course1 = new Course(101, "Java");
+        Course course2 = new Course(102, "Python");
+
+        // Attendance log
+        List<AttendanceRecord> attendanceLog = new ArrayList<>();
+
+        // Mark attendance
+        AttendanceRecord record1 = new AttendanceRecord(student1.getStudentId(), course1.getCourseId(), "Present");
+        AttendanceRecord record2 = new AttendanceRecord(student2.getStudentId(), course2.getCourseId(), "Absent");
+        AttendanceRecord record3 = new AttendanceRecord(student1.getStudentId(), course2.getCourseId(), "Holiday"); // invalid
+
+        // Add to list
+        attendanceLog.add(record1);
+        attendanceLog.add(record2);
+        attendanceLog.add(record3);
+
+        // Display all records
+        System.out.println("--- Attendance Records ---");
+        for (AttendanceRecord record : attendanceLog) {
+            record.displayRecord();
         }
-
-
-        Course[]  courses = new Course[2];
-        courses[0] = new Course();
-        courses[0].setCourseDetails("CJAVA", "Java" );
-        courses[1] = new Course();
-        courses[1].setCourseDetails("CPYTHON", "Python" );
-
-
-       
-        System.out.println("---Registered Courses---");
-        for(Course course: courses){
-           if(course != null){
-            course.getCourseDetails();
-           }
-        }
-
-        System.out.println("---Marking Attendance---");
-        Attendance[] attendanceRecords = new Attendance[2];
-
-         attendanceRecords[0] = new Attendance();
-          attendanceRecords[0].markAttendance(1, "CJAVA", true);
-
-         attendanceRecords[1] = new Attendance();
-         attendanceRecords[1].markAttendance(2, "CPYTHON", false);
-
-       for (Attendance attendance : attendanceRecords) {
-           if (attendance != null) {
-             attendance.getAttendance();
-          }
-}
-
-
-
-
-        System.out.println("Session 2: Student and Course classes created.");
-        System.out.println("Session 3: Attendance feature added.");
     }
 }
-
 
 
 

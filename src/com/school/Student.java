@@ -1,16 +1,20 @@
 package com.school;
 
-
 public class Student {
-    int studentId;
-    String name;
-    public void setStudentDetails(int id, String studentName){
-        this.studentId = id;
-        this.name = studentName;
+    private int studentId;
+    private String name;
+
+    public Student(int studentId, String name) {
+        this.studentId = studentId;
+        this.name = name;
     }
 
-    public void getDetails(){
-        System.out.println("Student ID: " + this.studentId);
-        System.out.println("Student Name: " + this.name);
+    // Getters
+    public int getStudentId() {
+        return studentId;
+    }
+
+    public String getName() {
+        return name;
     }
 }
