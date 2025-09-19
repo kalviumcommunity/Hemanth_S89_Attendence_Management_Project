@@ -19,11 +19,23 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("---- Attendance Management System ----");
+        System.out.println("---- School Management System ----");
 
-        // Create students
-        Student student1 = new Student(1, "Hemanth");
-        Student student2 = new Student(2, "Sai");
+        // Create objects
+        Student student1 = new Student("Hemanth", "10th Grade");
+        Student student2 = new Student("Sai", "9th Grade");
+        Teacher teacher = new Teacher("Mr. John", "Mathematics");
+        Staff staff = new Staff("Mary", "Clerk");
+
+        // Display details
+        System.out.println("\n--- Person Details ---");
+        student1.displayDetails();
+        System.out.println();
+        student2.displayDetails();
+        System.out.println();
+        teacher.displayDetails();
+        System.out.println();
+        staff.displayDetails();
 
         // Create courses
         Course course1 = new Course(101, "Java");
@@ -32,18 +44,18 @@ public class Main {
         // Attendance log
         List<AttendanceRecord> attendanceLog = new ArrayList<>();
 
-        // Mark attendance
-        AttendanceRecord record1 = new AttendanceRecord(student1.getStudentId(), course1.getCourseId(), "Present");
-        AttendanceRecord record2 = new AttendanceRecord(student2.getStudentId(), course2.getCourseId(), "Absent");
-        AttendanceRecord record3 = new AttendanceRecord(student1.getStudentId(), course2.getCourseId(), "Holiday"); // invalid
+        // Use student.getId() for attendance
+        AttendanceRecord record1 = new AttendanceRecord(student1.getId(), course1.getCourseId(), "Present");
+        AttendanceRecord record2 = new AttendanceRecord(student2.getId(), course2.getCourseId(), "Absent");
+        AttendanceRecord record3 = new AttendanceRecord(student1.getId(), course2.getCourseId(), "Holiday"); // invalid
 
         // Add to list
         attendanceLog.add(record1);
         attendanceLog.add(record2);
         attendanceLog.add(record3);
 
-        // Display all records
-        System.out.println("--- Attendance Records ---");
+        // Display attendance records
+        System.out.println("\n--- Attendance Records ---");
         for (AttendanceRecord record : attendanceLog) {
             record.displayRecord();
         }
