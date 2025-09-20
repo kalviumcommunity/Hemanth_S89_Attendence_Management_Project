@@ -11,7 +11,6 @@
 // }
 
 
-
 package com.school;
 
 import java.util.ArrayList;
@@ -49,7 +48,7 @@ public class Main {
         AttendanceRecord record2 = new AttendanceRecord(student2.getId(), course2.getCourseId(), "Absent");
         AttendanceRecord record3 = new AttendanceRecord(student1.getId(), course2.getCourseId(), "Holiday"); // invalid
 
-        // Add to list
+        // Add to attendance list
         attendanceLog.add(record1);
         attendanceLog.add(record2);
         attendanceLog.add(record3);
@@ -59,6 +58,23 @@ public class Main {
         for (AttendanceRecord record : attendanceLog) {
             record.displayRecord();
         }
+
+      
+        FileStorageService storage = new FileStorageService();
+
+        // Prepare lists for saving
+        List<Student> students = new ArrayList<>();
+        students.add(student1);
+        students.add(student2);
+
+        List<Course> courses = new ArrayList<>();
+        courses.add(course1);
+        courses.add(course2);
+
+        // Save lists to text files
+        storage.saveData(students, "students.txt");
+        storage.saveData(courses, "courses.txt");
+        storage.saveData(attendanceLog, "attendance_log.txt");
     }
 }
 
