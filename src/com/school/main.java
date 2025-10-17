@@ -49,29 +49,35 @@ public class Main {
         Course course1 = new Course(101, "Java");
         Course course2 = new Course(102, "Python");
 
-        // Attendance log using object references
-        List<AttendanceRecord> attendanceLog = new ArrayList<>();
+        // --- Storage & Attendance Service ---
+        FileStorageService storage = new FileStorageService();
+        AttendanceService attendanceService = new AttendanceService(storage);
 
-        AttendanceRecord record1 = new AttendanceRecord(student1, course1, "Present");
-        AttendanceRecord record2 = new AttendanceRecord(student2, course2, "Absent");
-        AttendanceRecord record3 = new AttendanceRecord(student1, course2, "Holiday"); // invalid -> will be marked "Invalid"
+        // Prepare lists for lookups and saving
+        List<Student> allStudents = new ArrayList<>();
+        allStudents.add(student1);
+        allStudents.add(student2);
 
-        // Add to attendance list
-        attendanceLog.add(record1);
-        attendanceLog.add(record2);
-        attendanceLog.add(record3);
+        List<Course> allCourses = new ArrayList<>();
+        allCourses.add(course1);
+        allCourses.add(course2);
 
-        // Display attendance records
-        System.out.println("\n--- Attendance Records ---");
-        for (AttendanceRecord record : attendanceLog) {
-            record.displayRecord();
-        }
+        // Use overloaded markAttendance methods
+        attendanceService.markAttendance(student1, course1, "Present");
+        attendanceService.markAttendance(student2, course2, "Absent");
+        // Use ID-based overload which will lookup objects
+        attendanceService.markAttendance(student1.getId(), course2.getCourseId(), "Present", allStudents, allCourses);
+
+        // Display different views
+        attendanceService.displayAttendanceLog();
+        attendanceService.displayAttendanceLog(student1);
+        attendanceService.displayAttendanceLog(course2);
+
+        // Save attendance data via service
+        attendanceService.saveAttendanceData();
 
       
-        FileStorageService storage = new FileStorageService();
-
-        // Prepare lists for saving
-        // If we saved from the polymorphic list, filter for Student instances
+        // Prepare lists for saving (students and courses)
         List<Student> students = new ArrayList<>();
         for (Person p : schoolPeople) {
             if (p instanceof Student) {
@@ -86,7 +92,6 @@ public class Main {
         // Save lists to text files
         storage.saveData(students, "students.txt");
         storage.saveData(courses, "courses.txt");
-        storage.saveData(attendanceLog, "attendance_log.txt");
     }
 }
 
