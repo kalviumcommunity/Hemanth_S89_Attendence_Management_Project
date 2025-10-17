@@ -1,44 +1,45 @@
 package com.school;
 
 public class AttendanceRecord implements Storable {
-    private int studentId;
-    private int courseId;
+    private Student student;
+    private Course course;
     private String status;
 
-    public AttendanceRecord(int studentId, int courseId, String status) {
-        this.studentId = studentId;
-        this.courseId = courseId;
+    public AttendanceRecord(Student student, Course course, String status) {
+        this.student = student;
+        this.course = course;
 
         if (status.equalsIgnoreCase("Present") || status.equalsIgnoreCase("Absent")) {
             this.status = status.substring(0,1).toUpperCase() + status.substring(1).toLowerCase();
         } else {
             this.status = "Invalid";
-            System.out.println("⚠️ Warning: Invalid status entered. Defaulting to 'Invalid'.");
+            System.out.println("\u26a0\ufe0f Warning: Invalid status entered. Defaulting to 'Invalid'.");
         }
     }
 
     // Getters
-    public int getStudentId() {
-        return studentId;
+    public Student getStudent() {
+        return student;
     }
 
-    public int getCourseId() {
-        return courseId;
+    public Course getCourse() {
+        return course;
     }
 
     public String getStatus() {
         return status;
     }
 
-    // Display method
+    // Display method - richer output using object references
     public void displayRecord() {
-        System.out.println("Student ID: " + studentId 
-            + " | Course ID: " + courseId 
+        System.out.println("Student: " + student.getName() + " (ID: " + student.getId() + ")"
+            + " | Course: " + course.getCourseName() + " (ID: " + course.getCourseId() + ")"
             + " | Status: " + status);
     }
 
     @Override
     public String toDataString() {
-        return studentId + "," + courseId + "," + status;
+        // Keep using IDs for file storage compatibility
+        return student.getId() + "," + course.getCourseId() + "," + status;
     }
 }
