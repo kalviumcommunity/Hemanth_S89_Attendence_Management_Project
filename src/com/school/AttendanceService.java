@@ -7,9 +7,11 @@ import java.util.stream.Collectors;
 public class AttendanceService {
     private List<AttendanceRecord> attendanceLog;
     private FileStorageService storageService;
+    private RegistrationService registrationService;
 
-    public AttendanceService(FileStorageService storageService) {
+    public AttendanceService(FileStorageService storageService, RegistrationService registrationService) {
         this.storageService = storageService;
+        this.registrationService = registrationService;
         this.attendanceLog = new ArrayList<>();
     }
 
@@ -20,10 +22,10 @@ public class AttendanceService {
         System.out.println("Marked attendance: " + record.toDataString());
     }
 
-    // Mark attendance using IDs and lookup lists
-    public void markAttendance(int studentId, int courseId, String status, List<Student> allStudents, List<Course> allCourses) {
-        Student student = findStudentById(studentId, allStudents);
-        Course course = findCourseById(courseId, allCourses);
+    // Mark attendance using IDs with RegistrationService lookup
+    public void markAttendance(int studentId, int courseId, String status) {
+        Student student = registrationService.findStudentById(studentId);
+        Course course = registrationService.findCourseById(courseId);
         if (student == null) {
             System.out.println("\u274c Student with ID " + studentId + " not found.");
             return;
@@ -33,22 +35,6 @@ public class AttendanceService {
             return;
         }
         markAttendance(student, course, status);
-    }
-
-    private Student findStudentById(int id, List<Student> students) {
-        if (students == null) return null;
-        for (Student s : students) {
-            if (s.getId() == id) return s;
-        }
-        return null;
-    }
-
-    private Course findCourseById(int id, List<Course> courses) {
-        if (courses == null) return null;
-        for (Course c : courses) {
-            if (c.getCourseId() == id) return c;
-        }
-        return null;
     }
 
     public void displayAttendanceLog() {
